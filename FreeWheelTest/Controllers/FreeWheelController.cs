@@ -72,6 +72,8 @@ namespace FreeWheelTest.Controllers
             return result;
         }
 
+
+        //Assignment 1
         public string ProcessProgramName()
         {
             FreeWheelDBEntities context = new FreeWheelDBEntities();
@@ -97,24 +99,23 @@ namespace FreeWheelTest.Controllers
                 }
 
             }
-                  
+               
 
             foreach (ProgramViewModel data in result)
             {
-                resultStr = resultStr + delimiter + data.programName+delimiter;
+                resultStr = resultStr + delimiter + data.programName+
+                    ","+delimiter;
             }
-
-
             return results;
 
 
         }
-
+        //Assignment 2
         public ProgramViewModel GetEaliestTrain(int stationID)
         {
             FreeWheelDBEntities context = new FreeWheelDBEntities();
             ProgramViewModel programQuery = ((from r in context.PROGRAMs
-                                              where r.STATION_ID == 2
+                                              where r.STATION_ID == stationID
                                               select new ProgramViewModel
                                               {
                                                   programId = r.PROGRAM_ID,
@@ -128,8 +129,8 @@ namespace FreeWheelTest.Controllers
 
             return programQuery;
         }
-
-
+        
+//Assignment 3
         public void PopulatMartketPop()
         {
             FreeWheelDBEntities context = new FreeWheelDBEntities();
