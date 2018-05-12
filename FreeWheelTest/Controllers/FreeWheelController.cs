@@ -17,15 +17,21 @@ namespace FreeWheelTest.Controllers
             string str= ProcessProgramName();
             return View((object)str);
         }
-
-         
+                
 
         public ActionResult Index()
         {
+            
             FlightViewModel model = new FlightViewModel();
             model.stationVM = GetStationDetails();
             model.programVM = GetProgramDetails();
             return View(model);
+        }
+        [HttpGet]
+        public ActionResult MarketPop()
+        {
+            PopulatMartketPop();
+            return View((true));
         }
 
         public List<StationViewModel> GetStationDetails()
@@ -99,22 +105,24 @@ namespace FreeWheelTest.Controllers
                 }
 
             }
-               
+           
 
             foreach (ProgramViewModel data in result)
             {
-                resultStr = resultStr + delimiter + data.programName+
-                    ","+delimiter;
+                string tempProgramName = data.programName;
+
+                resultStr =( resultStr + delimiter + tempProgramName.Replace("'","\"") +
+                    delimiter+", ");
             }
-            return results;
+            return resultStr.Remove (resultStr.Length -2);
 
 
         }
         //Assignment 2
-        public ProgramViewModel GetEaliestTrain(int stationID)
+        public List<ProgramViewModel> GetEaliestTrain(int stationID)
         {
             FreeWheelDBEntities context = new FreeWheelDBEntities();
-            ProgramViewModel programQuery = ((from r in context.PROGRAMs
+           List< ProgramViewModel> programQuery = ((from r in context.PROGRAMs
                                               where r.STATION_ID == stationID
                                               select new ProgramViewModel
                                               {
@@ -124,7 +132,7 @@ namespace FreeWheelTest.Controllers
                                                   flightTime=r.FLIGHT_DATE.Value
 
                                               }
-                                 ).OrderBy(t => t.programName)).OrderBy(t => t.flightTime).First();
+                                 ).OrderBy(t => t.programName)).OrderBy(t => t.flightTime).ToList();
 
 
             return programQuery;
@@ -143,7 +151,7 @@ namespace FreeWheelTest.Controllers
                          CELL_ID= c.CELL_ID
                       };
 
-
+            context.Database.ExecuteSqlCommand("Delete From [EmployeeDB].[dbo].[MARKET_POP]");
 
             if (pop != null && pop.Count() > 0)
             {
@@ -153,9 +161,9 @@ namespace FreeWheelTest.Controllers
                     model.MARKET_ID = data.MARKET_ID;
                     model.CELL_ID = data.CELL_ID;
                     context.MARKET_POP.Add(model);
-                    context.SaveChanges();
+                    
                 }
-
+                context.SaveChanges();
             }
 
         }
