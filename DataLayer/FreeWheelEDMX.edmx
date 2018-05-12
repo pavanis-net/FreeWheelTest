@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EmployeeDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CELLS">
+          <Key>
+            <PropertyRef Name="CELL_ID" />
+          </Key>
+          <Property Name="CELL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CELL" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MARKET">
+          <Key>
+            <PropertyRef Name="MARKET_ID" />
+          </Key>
+          <Property Name="MARKET_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MARKET_NAME" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MARKET_POP">
+          <Key>
+            <PropertyRef Name="MARKET_ID" />
+            <PropertyRef Name="CELL_ID" />
+          </Key>
+          <Property Name="MARKET_ID" Type="int" Nullable="false" />
+          <Property Name="CELL_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PROGRAM">
+          <Key>
+            <PropertyRef Name="PROGRAM_ID" />
+          </Key>
+          <Property Name="PROGRAM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATION_ID" Type="int" />
+          <Property Name="PROGRAM_NAME" Type="varchar" MaxLength="50" />
+          <Property Name="FLIGHT_DATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="STATION">
+          <Key>
+            <PropertyRef Name="STATION_ID" />
+          </Key>
+          <Property Name="STATION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATION_NAME" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="EmployeeDBModelStoreContainer">
+          <EntitySet Name="CELLS" EntityType="Self.CELLS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARKET" EntityType="Self.MARKET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARKET_POP" EntityType="Self.MARKET_POP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROGRAM" EntityType="Self.PROGRAM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATION" EntityType="Self.STATION" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EmployeeDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CELL">
+          <Key>
+            <PropertyRef Name="CELL_ID" />
+          </Key>
+          <Property Name="CELL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CELL1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MARKET">
+          <Key>
+            <PropertyRef Name="MARKET_ID" />
+          </Key>
+          <Property Name="MARKET_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MARKET_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MARKET_POP">
+          <Key>
+            <PropertyRef Name="MARKET_ID" />
+            <PropertyRef Name="CELL_ID" />
+          </Key>
+          <Property Name="MARKET_ID" Type="Int32" Nullable="false" />
+          <Property Name="CELL_ID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PROGRAM">
+          <Key>
+            <PropertyRef Name="PROGRAM_ID" />
+          </Key>
+          <Property Name="PROGRAM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATION_ID" Type="Int32" />
+          <Property Name="PROGRAM_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FLIGHT_DATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="STATION">
+          <Key>
+            <PropertyRef Name="STATION_ID" />
+          </Key>
+          <Property Name="STATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATION_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityContainer Name="FreeWheelDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CELLS" EntityType="Self.CELL" />
+          <EntitySet Name="MARKETs" EntityType="Self.MARKET" />
+          <EntitySet Name="MARKET_POP" EntityType="Self.MARKET_POP" />
+          <EntitySet Name="PROGRAMs" EntityType="Self.PROGRAM" />
+          <EntitySet Name="STATIONs" EntityType="Self.STATION" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EmployeeDBModelStoreContainer" CdmEntityContainer="FreeWheelDBEntities">
+          <EntitySetMapping Name="CELLS">
+            <EntityTypeMapping TypeName="EmployeeDBModel.CELL">
+              <MappingFragment StoreEntitySet="CELLS">
+                <ScalarProperty Name="CELL_ID" ColumnName="CELL_ID" />
+                <ScalarProperty Name="CELL1" ColumnName="CELL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARKETs">
+            <EntityTypeMapping TypeName="EmployeeDBModel.MARKET">
+              <MappingFragment StoreEntitySet="MARKET">
+                <ScalarProperty Name="MARKET_ID" ColumnName="MARKET_ID" />
+                <ScalarProperty Name="MARKET_NAME" ColumnName="MARKET_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARKET_POP">
+            <EntityTypeMapping TypeName="EmployeeDBModel.MARKET_POP">
+              <MappingFragment StoreEntitySet="MARKET_POP">
+                <ScalarProperty Name="MARKET_ID" ColumnName="MARKET_ID" />
+                <ScalarProperty Name="CELL_ID" ColumnName="CELL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROGRAMs">
+            <EntityTypeMapping TypeName="EmployeeDBModel.PROGRAM">
+              <MappingFragment StoreEntitySet="PROGRAM">
+                <ScalarProperty Name="PROGRAM_ID" ColumnName="PROGRAM_ID" />
+                <ScalarProperty Name="STATION_ID" ColumnName="STATION_ID" />
+                <ScalarProperty Name="PROGRAM_NAME" ColumnName="PROGRAM_NAME" />
+                <ScalarProperty Name="FLIGHT_DATE" ColumnName="FLIGHT_DATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATIONs">
+            <EntityTypeMapping TypeName="EmployeeDBModel.STATION">
+              <MappingFragment StoreEntitySet="STATION">
+                <ScalarProperty Name="STATION_ID" ColumnName="STATION_ID" />
+                <ScalarProperty Name="STATION_NAME" ColumnName="STATION_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

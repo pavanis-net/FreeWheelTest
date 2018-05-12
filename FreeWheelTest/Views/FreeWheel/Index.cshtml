@@ -1,0 +1,13 @@
+﻿@model FreeWheelTest.Models.FlightViewModel
+
+<label for="Stations">
+    <select name="Stations">
+        <option>Select Name  </option>
+        @foreach(var data in Model.stationVM)
+        {
+            <option @data.statinId>@data.stationName</option>
+        }
+    </select>
+
+</label>
+
